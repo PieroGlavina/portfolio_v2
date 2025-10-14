@@ -1,9 +1,19 @@
 import { useState } from "react";
 import { navList } from "../costants/index.js";
-import { Menu, X } from "lucide-react"; // usa lucide-react per icone moderne
+import { Menu, X } from "lucide-react";
+import {useGSAP} from "@gsap/react"; // usa lucide-react per icone moderne
+import gsap from "gsap";
 
 const NavBar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+
+    useGSAP(() => {
+        if(menuOpen)
+            gsap.fromTo("#mobile-menu", { opacity: 0, y: -50 }, { opacity: 1, y: 0, duration: 0.5 })
+        else
+            gsap.fromTo("#mobile-menu", { opacity: 1, y: 0 }, { opacity: 0, y: -50, duration: 0.5 })
+
+    }, [menuOpen])
 
     return (
         <nav className="w-full fixed">
@@ -32,7 +42,7 @@ const NavBar = () => {
             </div>
 
             {menuOpen && (
-                <div className="md:hidden">
+                <div id="mobile-menu" className="md:hidden">
                     <div className="flex flex-col items-center py-4 space-y-4">
                         {navList.map((nav, i) => (
                             <a
