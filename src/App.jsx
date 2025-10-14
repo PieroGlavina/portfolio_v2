@@ -1,8 +1,11 @@
 import React from 'react'
+import NavBar from "./components/NavBar.jsx";
 
 const App = () => {
     return (
-        <div className="text-3xl font-bold underline">Hello word</div>
+        <main>
+            <NavBar />
+        </main>
     )
 }
 export default App
