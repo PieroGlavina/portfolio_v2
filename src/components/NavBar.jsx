@@ -16,8 +16,8 @@ const NavBar = () => {
     }, [menuOpen])
 
     return (
-        <nav className="w-full fixed">
-            <div className="px-6 py-4 flex items-center justify-between">
+        <section className="w-full">
+            <nav className="px-6 py-4 flex items-center justify-between">
 
                 <a href="/" className="cursor-pointer">
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-electrolize">
@@ -39,7 +39,7 @@ const NavBar = () => {
                 >
                     {menuOpen ? <X size={28} /> : <Menu size={28} />}
                 </button>
-            </div>
+            </nav>
 
             {menuOpen && (
                 <div id="mobile-menu" className="md:hidden">
@@ -61,7 +61,7 @@ const NavBar = () => {
 
                 </div>
             )}
-        </nav>
+        </section>
     );
 };
 
