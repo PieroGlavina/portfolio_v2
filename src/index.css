@@ -10,6 +10,52 @@
         @apply font-electrolize text-2xl cursor-pointer text-gray-400 hover:text-gray-700 transition-all;
     }
 
+    .section-title{
+        @apply font-electrolize text-3xl lg:text-5xl text-center max-w-2xl;
+    }
 
+    .section-subtitle{
+        @apply font-electrolize text-xl lg:text-3xl text-center text-gray-400 mx-1 p-3 lg:ml-28;
+    }
+
+    .card{
+        @apply relative w-full h-full transition-all duration-500 cursor-pointer [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)];
+    }
+
+    .card-front{
+        @apply absolute inset-0 flex items-center justify-center bg-gray-50 text-black rounded-2xl [backface-visibility:hidden];
+    }
+
+    .card-back{
+        @apply absolute inset-0 flex items-center justify-center text-black bg-gray-200 rounded-2xl border-2 [transform:rotateY(180deg)] [backface-visibility:hidden];
+    }
+
+
+    .nav-button {
+        @apply text-gray-400 hover:text-gray-700 cursor-pointer transition-all;
+
+        h3 {
+            @apply font-electrolize text-xs;
+        }
+
+        p {
+            @apply font-electrolize text-xl;
+        }
+    }
+
+    .input-field {
+        @apply border-b-2 border-gray-400 p-2 outline-none text-gray-500 hover:text-gray-700
+        hover:border-gray-700 transition-all w-2/3;
+    }
+
+    .input-area {
+        @apply border-b-2 border-gray-400 p-2 outline-none text-gray-500 hover:text-gray-700
+        hover:border-gray-700 transition-all resize-none w-2/3;
+    }
+
+    .input-button{
+        @apply border-2 border-gray-400 p-2 outline-none text-gray-500 hover:text-gray-700
+        hover:border-gray-700 hover:bg-gray-300 transition-all w-2/3
+    }
 
 }
