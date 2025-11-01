@@ -3,11 +3,7 @@ import {RigidBody} from "@react-three/rapier";
 
 const Walls = () => {
 
-    const wallMat = <meshStandardMaterial color="white" wireframe opacity={0.1} transparent />
-    const width = 30;
-    const height = 30;
-    const depth = 30;
-
+    const wallMat = <meshStandardMaterial color="white" opacity={0} transparent />
     const size = 20;
 
     return (
@@ -15,7 +11,7 @@ const Walls = () => {
 
             <RigidBody type="fixed" restitution={1}>
                 {/* DESTRA */}
-                <mesh position={[30 / 2, 0, 0]}>
+                <mesh position={[21.5, 0, 0]}>
                     <boxGeometry args={[0.1, size, size]} />
                     {wallMat}
                 </mesh>
@@ -24,7 +20,7 @@ const Walls = () => {
 
             <RigidBody type="fixed" restitution={1}>
                 {/* SINISTRA */}
-                <mesh position={[-30 / 2, 0, 0]}>
+                <mesh position={[-21.5, 0, 0]}>
                     <boxGeometry args={[0.1, size, size]} />
                     {wallMat}
                 </mesh>
