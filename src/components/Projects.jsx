@@ -31,16 +31,18 @@ const Projects = () => {
     }, [currentIndex]);
 
     return (
-        <section className="w-full h-screen relative">
+        <section id="projects" className="w-full h-screen relative">
 
-            <div className=" top-10 z-20 text-center">
+            <div
+                className=" top-10 md:top-20 left-0 right-0 z-20 w-full px-4"
+            >
                 <h1 className="section-title">
-                    {"<Discover my work />"}
+                    {"<My projects and work />"}
                 </h1>
 
-                <h3 className="font-electrolize text-xl lg:text-3xl text-gray-400 mx-1 p-3 lg:ml-28">
+                <h3 className="section-subtitle">
                     {isMobile ? "[" : "<!-- "}
-                    {"Across the year I learned and used different tools to work on different kinds of projects"}
+                    {"Across the years to practice I did different projects and experiments"}
                     {isMobile ? "]" : " -->"}
                 </h3>
             </div>

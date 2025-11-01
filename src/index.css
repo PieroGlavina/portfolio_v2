@@ -4,6 +4,10 @@
     --font-electrolize: "Electrolize", sans-serif;
 }
 
+*{
+    scroll-behavior: smooth;
+}
+
 @layer components{
 
     .navBar-text{

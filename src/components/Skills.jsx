@@ -106,19 +106,19 @@ export default function Skills() {
 
     return (
 
-        <section ref={pinningContainerRef} className="w-full relative h-screen overflow-hidden">
+        <section id="skills" ref={pinningContainerRef} className="w-full relative h-screen overflow-hidden">
 
             <div
                 ref={titleContainerRef}
                 className="absolute top-10 md:top-20 left-0 right-0 z-20 w-full px-4"
             >
                 <h1 className="section-title">
-                    {"<Discover my work />"}
+                    {"<These are my skills />"}
                 </h1>
 
                 <h3 className="section-subtitle">
                     {isMobile ? "[" : "<!-- "}
-                    {"Across the year I learned and used different tools to work on different kinds of projects"}
+                    {"During my studies I learned different tools and technologies that allowed me to create stuff"}
                     {isMobile ? "]" : " -->"}
                 </h3>
             </div>

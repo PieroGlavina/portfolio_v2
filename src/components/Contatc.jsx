@@ -11,16 +11,18 @@ const Contact = () => {
     };
 
     return (
-        <section className="w-full flex flex-col items-center px-6 sm:px-10 lg:px-20">
+        <section id="contact" className="w-full flex flex-col items-center px-6 sm:px-10 lg:px-20">
 
-            <div className="top-10 z-20 text-center">
+            <div
+                className=" top-10 md:top-20 left-0 right-0 z-20 w-full px-4"
+            >
                 <h1 className="section-title">
-                    {"<These are my skills />"}
+                    {"<Want to Contact Me? />"}
                 </h1>
 
                 <h3 className="section-subtitle">
                     {isMobile ? "[" : "<!-- "}
-                    {"Across the year I learned and used different tools to work on different kinds of projects"}
+                    {"Let's get in touch! Send me a message!"}
                     {isMobile ? "]" : " -->"}
                 </h3>
             </div>

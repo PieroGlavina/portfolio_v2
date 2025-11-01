@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contatc.jsx";
 import Hero from "./components/Hero.jsx";
+import Footer from "./components/Footer.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,6 +19,7 @@ const App = () => {
             <Skills />
             <Projects />
             <Contact />
+            <Footer />
         </main>
     )
 }
