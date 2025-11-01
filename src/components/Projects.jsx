@@ -38,7 +38,7 @@ const Projects = () => {
                     {"<Discover my work />"}
                 </h1>
 
-                <h3 className="section-subtitle">
+                <h3 className="font-electrolize text-xl lg:text-3xl text-gray-400 mx-1 p-3 lg:ml-28">
                     {isMobile ? "[" : "<!-- "}
                     {"Across the year I learned and used different tools to work on different kinds of projects"}
                     {isMobile ? "]" : " -->"}
