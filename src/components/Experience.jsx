@@ -8,6 +8,7 @@ import Asteroid3 from "./Models/Asteroid3.jsx";
 import Asteroid4 from "./Models/Asteroid4.jsx";
 import Asteroid5 from "./Models/Asteroid5.jsx";
 import Asteroid6 from "./Models/Asteroid6.jsx";
+import Satellite from "./Models/Satellite.jsx";
 
 const asteroids = [<Asteroid1 />, <Asteroid2 />, <Asteroid3 />, <Asteroid4 />, <Asteroid5 />, <Asteroid6 />,
     <Asteroid1 />, <Asteroid2 />, <Asteroid3 />, <Asteroid4 />, <Asteroid5 />, <Asteroid6 />];
@@ -89,7 +90,7 @@ function FloatingCube({ mouse, attractionStrength, content }) {
             linearDamping={0.3}
             angularDamping={0.3}
             position={[
-                (Math.random() - 0.5) * 20,
+                (Math.random() - 0.9) * 20,
                 (Math.random() - 0.5) * 20,
                 (Math.random() - 0.5) * 20,
             ]}
@@ -130,9 +131,22 @@ export default function Experience() {
 
     return (
         <>
+
             {asteroids.map((asteroid, i) => (
                 <FloatingCube key={i} mouse={mouse} attractionStrength={2} content={asteroid} />
             ))}
+
+
+            <RigidBody
+                colliders="hull"
+                restitution={0}
+                friction={0}
+                linearDamping={0.5}
+                angularDamping={0.3}
+
+            >
+                <Satellite />
+            </RigidBody>
         </>
     )
 }

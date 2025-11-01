@@ -2,6 +2,7 @@ import {Canvas, } from "@react-three/fiber";
 import {Physics, } from "@react-three/rapier";
 import Experience from "./Experience.jsx";
 import Walls from "./Walls.jsx";
+import Satellite from "./Models/Satellite.jsx";
 
 
 const Hero = () => {
