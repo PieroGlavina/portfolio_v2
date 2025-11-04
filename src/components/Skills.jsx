@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const skills = [
+    // ... (your skills array remains unchanged)
     { id: 0, title: "Blender", subtitle: "3D", size: "big", style: "border-4 border-orange-400", img: "/images/blender.svg" },
     { id: 1, title: "Solar2D (SDK)", subtitle: "Game Development", size: "small", style: "bg-gray-50", img: "/images/solar2d.svg" },
     { id: 2, title: "CSS", subtitle: "Styling", size: "small", style: "bg-gray-50", img: "/images/css.svg" },
@@ -27,10 +28,10 @@ export const skills = [
 ];
 
 const sizeClasses = {
-    small: 'col-span-1 row-span-1',       // 200x200
-    horizontal: 'col-span-2 row-span-1', // 400x200
-    vertical: 'col-span-1 row-span-2',     // 200x400
-    big: 'col-span-2 row-span-2',        // 400x400
+    small: 'col-span-1 row-span-1',       // 200x200 or 150x150
+    horizontal: 'col-span-2 row-span-1', // 400x200 or 300x150
+    vertical: 'col-span-1 row-span-2',     // 200x400 or 150x300
+    big: 'col-span-2 row-span-2',        // 400x400 or 300x300
 };
 
 
@@ -44,7 +45,7 @@ export default function Skills() {
     const scrollWrapperRef = useRef(null);
     const gridContainerRef = useRef(null);
 
-    // 5. isMobile state logic
+    // isMobile state logic (unchanged)
     useLayoutEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
         checkMobile();
@@ -52,7 +53,7 @@ export default function Skills() {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // 6. GSAP Horizontal Scroll Animation
+    // 6. GSAP Horizontal Scroll Animation (UPDATED)
     useLayoutEffect(() => {
         // Get refs to all elements
         const pinningContainer = pinningContainerRef.current;
@@ -66,12 +67,10 @@ export default function Skills() {
         const firstBoxWidth = grid.firstElementChild.offsetWidth;
         const lastBoxWidth = grid.lastElementChild.offsetWidth;
 
-        // 2. Calculate Start X (to center the first box)
-        // (Half Viewport) - (Half First Box)
+        // 2. Calculate Start X
         const startX = (viewportWidth / 2) - (firstBoxWidth / 2);
 
-        // 3. Calculate End X (to center the last box)
-        // -(Total Grid Width - Half Viewport - Half Last Box)
+        // 3. Calculate End X
         const endX = -(gridWidth - (viewportWidth / 2) - (lastBoxWidth / 2));
 
         // 4. Set the initial position of the grid
@@ -92,17 +91,48 @@ export default function Skills() {
             trigger: pinningContainer, // The element that triggers the pin
             pin: true,                 // Pin the trigger element
             start: "top top",          // Start when the top of the trigger hits the top of the viewport
-            end: "+=2000", //"2 pages" -> scroll 2000px past the start
+            end: "+=2000",
             scrub: 1,                  // Smooth scrubbing (1s "lag")
             invalidateOnRefresh: true, // Recalculate all values on window resize
         });
 
-        // 7. Cleanup function
+        // 7. NEW: Add mobile-only animations for each box
+        const boxes = gsap.utils.toArray(grid.children);
+
+        boxes.forEach((box) => {
+            // Set initial state for all boxes on mobile
+            gsap.set(box, { opacity: 0, y: 100 });
+
+            // Create a timeline for *this* box's animation
+            const boxAnimation = gsap.timeline().to(box, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: 'power2.out',
+            });
+
+            // Create a ScrollTrigger for *this* box
+            ScrollTrigger.create({
+                animation: boxAnimation,
+                trigger: box,
+                // This is the key: link this trigger to the main timeline's progress
+                containerAnimation: tl,
+                // We are scrolling horizontally
+                horizontal: true,
+                // Start when the left edge of the box hits the 66% mark of the viewport
+                start: "left 66%",
+
+            });
+        });
+
+
+        // 8. UPDATED Cleanup function
         return () => {
-            st.kill();  // Kill the ScrollTrigger
-            tl.kill();  // Kill the Timeline
+            // Kill *all* ScrollTriggers and timelines created in this effect
+            ScrollTrigger.getAll().forEach(t => t.kill());
+            tl.kill();
         };
-    }, [isMobile]);
+    }, [isMobile]); // Re-run this entire effect when isMobile changes
 
     return (
 
@@ -116,7 +146,7 @@ export default function Skills() {
                     {"<These are my skills />"}
                 </h1>
 
-                <h3 className="section-subtitle">
+                <h3 className="section-subtitle text-center">
                     {isMobile ? "[" : "<!-- "}
                     {"During my studies I learned different tools and technologies that allowed me to create stuff"}
                     {isMobile ? "]" : " -->"}
@@ -128,7 +158,13 @@ export default function Skills() {
 
                 <div
                     ref={gridContainerRef}
-                    className="grid grid-flow-col grid-rows-[repeat(2,200px)] auto-cols-[200px] gap-4 w-max px-4"
+                    // 1. UPDATED: Make grid/row sizes responsive
+                    className={`grid grid-flow-col w-max px-4 
+                        ${isMobile
+                        ? 'grid-rows-[repeat(2,150px)] auto-cols-[150px] gap-3'
+                        : 'grid-rows-[repeat(2,200px)] auto-cols-[200px] gap-4'
+                    }
+                    `}
                 >
                     {skills.map(skill => (
 
@@ -139,8 +175,9 @@ export default function Skills() {
                             ${sizeClasses[skill.size]} 
                             ${skill.style}`}
                         >
-                            <h3 className="text-xl">{skill.title}</h3>
-                            <img src={skill.img} alt={skill.title} className="w-[70%] h-[70%] object-contain"/>
+                            {/* 2. UPDATED: Make text and image smaller on mobile */}
+                            <h3 className="text-lg md:text-xl">{skill.title}</h3>
+                            <img src={skill.img} alt={skill.title} className="w-[60%] md:w-[70%] h-[60%] md:h-[70%] object-contain"/>
                         </div>
                     ))}
 
@@ -153,4 +190,3 @@ export default function Skills() {
         </section>
     );
 }
-
