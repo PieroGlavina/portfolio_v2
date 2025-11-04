@@ -4,7 +4,7 @@ import scene from "/public/models/satellite.glb"
 import {useFrame} from "@react-three/fiber";
 useGLTF.preload("/public/models/satellite.glb");
 
-const Satellite = (props) =>  {
+const Satellite = ({isMobile, ...props}) =>  {
     const { nodes, materials } = useGLTF(scene)
 
     const satelliteRef = useRef()
@@ -23,7 +23,7 @@ const Satellite = (props) =>  {
 
 
     return (
-        <group {...props} dispose={null} position={[10,0,0]} scale={2.5} rotation={[-1,-1,-0.4]} ref={satelliteRef}>
+        <group {...props} dispose={null} position={isMobile ? [0,0,-5] : [10,0,0]} scale={2.5} rotation={[-1,-1,-0.4]} ref={satelliteRef}>
             <mesh
                 castShadow
                 receiveShadow

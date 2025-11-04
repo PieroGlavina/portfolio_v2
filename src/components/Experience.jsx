@@ -14,8 +14,8 @@ const asteroids = [<Asteroid1 />, <Asteroid2 />, <Asteroid3 />, <Asteroid4 />, <
     <Asteroid1 />, <Asteroid2 />, <Asteroid3 />, <Asteroid4 />, <Asteroid5 />, <Asteroid6 />];
 
 
-// This function should be *inside* Experience.jsx or imported
-function FloatingCube({ mouse, attractionStrength, content }) {
+// 1. Pass `isMobile` prop to FloatingCube
+function FloatingCube({ mouse, attractionStrength, content, isMobile }) {
     const ref = useRef()
 
     const randomVec = () =>
@@ -28,31 +28,29 @@ function FloatingCube({ mouse, attractionStrength, content }) {
     // Create vectors once to reuse
     const impulse = new THREE.Vector3()
     const cubePos = new THREE.Vector3()
-    const torqueImpulse = new THREE.Vector3() // Renamed from 'torque'
+    const torqueImpulse = new THREE.Vector3()
 
     useFrame((_, delta) => {
         const body = ref.current
         if (!body) return
 
-        // === THE KEY FIX ===
-        // Get the mass of the rigid body
         const mass = body.mass()
-        // ===================
 
-        // Get the cube's current position
         const posObj = body.translation()
         cubePos.set(posObj.x, posObj.y, posObj.z)
 
         // --- Linear Impulse ---
         impulse.set(0, 0, 0)
-        if (mouse.current.active) {
+
+        // 2. Modify this condition to *only* attract on non-mobile devices
+        if (!isMobile && mouse.current.active) {
             // 1. Calculate direction (as desired acceleration 'a')
             const toMouse = mouse.current.position.clone().sub(cubePos)
             toMouse.z = 0
             toMouse.normalize()
             impulse.copy(toMouse).multiplyScalar(attractionStrength)
         } else {
-            // Random float logic
+            // Random float logic (will run on desktop when mouse is inactive, and *always* on mobile)
             if (Math.random() < 0.01) {
                 impulse.copy(randomVec()).multiplyScalar(0.3) // 1. Desired acceleration 'a'
             }
@@ -64,20 +62,11 @@ function FloatingCube({ mouse, attractionStrength, content }) {
         // 3. Scale 'Δv' by mass to get required impulse (J = Δv * m)
         impulse.multiplyScalar(mass)
 
-        // Apply the mass-compensated impulse
         body.applyImpulse(impulse, true)
 
         // --- Angular Impulse (Torque) ---
-        // We do the same for torque, using mass as a proxy for inertia
-
-        // 1. Get desired angular velocity change (Δω)
         torqueImpulse.copy(randomVec()).multiplyScalar(0.003)
-
-        // 2. Scale 'Δω' by mass to get required torque impulse (J_τ = Δω * I)
-        // (Using mass as a simple proxy for Inertia 'I')
         torqueImpulse.multiplyScalar(mass)
-
-        // Apply the mass-compensated torque impulse
         body.applyTorqueImpulse(torqueImpulse, true)
     })
 
@@ -100,40 +89,49 @@ function FloatingCube({ mouse, attractionStrength, content }) {
     )
 }
 
-export default function Experience() {
+// 3. Accept `isMobile` prop
+export default function Experience({ isMobile }) {
     const { size } = useThree()
     const mouse = useRef({ active: false, position: new THREE.Vector3() })
     const planeWidth = 60
     const planeHeight = 20
 
     useEffect(() => {
-        const handleMove = (e) => {
-            mouse.current.active = true // <-- Always active on move
-            const x = (e.clientX / size.width) * 2 - 1
-            const y = -(e.clientY / size.height) * 2 + 1
-            mouse.current.position.set(
-                x * (planeWidth / 2),
-                y * (planeHeight / 2),
-                0
-            )
-        }
+        // 4. Run this entire effect *only* if not on mobile
+        if (!isMobile) {
+            const handleMove = (e) => {
+                mouse.current.active = true
+                const x = (e.clientX / size.width) * 2 - 1
+                const y = -(e.clientY / size.height) * 2 + 1
+                mouse.current.position.set(
+                    x * (planeWidth / 2),
+                    y * (planeHeight / 2),
+                    0
+                )
+            }
 
-        // This is the only time we set active to false
-        const handleLeave = () => (mouse.current.active = false)
+            const handleLeave = () => (mouse.current.active = false)
 
-        window.addEventListener('mousemove', handleMove)
-        window.addEventListener('mouseleave', handleLeave)
-        return () => {
-            window.removeEventListener('mousemove', handleMove)
-            window.removeEventListener('mouseleave', handleLeave)
+            window.addEventListener('mousemove', handleMove)
+            window.addEventListener('mouseleave', handleLeave)
+            return () => {
+                window.removeEventListener('mousemove', handleMove)
+                window.removeEventListener('mouseleave', handleLeave)
+            }
         }
-    }, [size, planeWidth, planeHeight])
+    }, [isMobile, size, planeWidth, planeHeight]); // Add isMobile to dependency array
 
     return (
         <>
-
-            {asteroids.map((asteroid, i) => (
-                <FloatingCube key={i} mouse={mouse} attractionStrength={2} content={asteroid} />
+            {/* 5. Conditionally render asteroids only if not on mobile */}
+            {!isMobile && asteroids.map((asteroid, i) => (
+                <FloatingCube
+                    key={i}
+                    mouse={mouse}
+                    attractionStrength={2}
+                    content={asteroid}
+                    isMobile={isMobile}
+                />
             ))}
 
 
@@ -143,10 +141,10 @@ export default function Experience() {
                 friction={0}
                 linearDamping={0.5}
                 angularDamping={0.3}
-
             >
-                <Satellite />
+                <Satellite isMobile={isMobile}/>
             </RigidBody>
+
         </>
     )
 }
