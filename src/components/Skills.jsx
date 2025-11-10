@@ -96,7 +96,6 @@ export default function Skills() {
             invalidateOnRefresh: true, // Recalculate all values on window resize
         });
 
-        // 7. NEW: Add mobile-only animations for each box
         const boxes = gsap.utils.toArray(grid.children);
 
         boxes.forEach((box) => {
@@ -136,13 +135,13 @@ export default function Skills() {
 
     return (
 
-        <section id="skills" ref={pinningContainerRef} className="w-full relative h-screen overflow-hidden">
+        <section id="skills" ref={pinningContainerRef} className="w-full relative h-screen overflow-hidden dark:bg-slate-900">
 
             <div
                 ref={titleContainerRef}
                 className="absolute top-10 md:top-20 left-0 right-0 z-20 w-full px-4"
             >
-                <h1 className="section-title">
+                <h1 className="section-title dark:text-gray-200">
                     {"<These are my skills />"}
                 </h1>
 
@@ -170,13 +169,13 @@ export default function Skills() {
 
                         <div
                             key={skill.id}
-                            className={`rounded-2xl p-4 text-black font-bold drop-shadow-xl
+                            className={`rounded-2xl p-4 text-black font-bold drop-shadow-xl dark:bg-slate-600
                             ${skill.size === "horizontal" ? "flex items-center" : "flex flex-col items-center"}
                             ${sizeClasses[skill.size]} 
                             ${skill.style}`}
                         >
                             {/* 2. UPDATED: Make text and image smaller on mobile */}
-                            <h3 className="text-lg md:text-xl">{skill.title}</h3>
+                            <h3 className="text-lg md:text-xl dark:text-gray-200">{skill.title}</h3>
                             <img src={skill.img} alt={skill.title} className="w-[60%] md:w-[70%] h-[60%] md:h-[70%] object-contain"/>
                         </div>
                     ))}

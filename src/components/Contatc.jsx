@@ -11,7 +11,7 @@ const Contact = () => {
     };
 
     return (
-        <section id="contact" className="w-full flex flex-col items-center px-6 sm:px-10 lg:px-20">
+        <section id="contact" className="w-full flex flex-col items-center px-6 sm:px-10 lg:px-20 dark:bg-slate-900">
 
             <div
                 className=" top-10 md:top-20 left-0 right-0 z-20 w-full px-4"

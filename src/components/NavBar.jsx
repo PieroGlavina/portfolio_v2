@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { navList } from "../costants/index.js";
 import { Menu, X } from "lucide-react";
-import {useGSAP} from "@gsap/react"; // usa lucide-react per icone moderne
+import {useGSAP} from "@gsap/react";
 import gsap from "gsap";
 import ThemeSwitch from "./ThemeSwitch.jsx";
 
@@ -18,36 +18,36 @@ const NavBar = () => {
 
     return (
         <section className="w-full">
-            <nav className="px-6 py-4 flex items-center justify-between dark:bg-slate-900">
+            <nav className="px-6 py-4 flex items-center justify-between dark:bg-darkBg">
 
                 <a href="/" className="cursor-pointer">
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-electrolize dark:text-slate-200">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-electrolize hover:text-gray-400 dark:text-darkTxt dark:hover:text-darkHoverTxt transition-all">
                         Piero Glavina
                     </h1>
                 </a>
 
-                <ThemeSwitch />
+                <div className="flex gap-10">
+                    <ThemeSwitch />
 
-
-                <div className="hidden md:flex items-center space-x-10">
-                    {navList.map((nav, i) => (
-                        <a href={nav.href} key={i} className="navBar-text">
-                            // {nav.title}
-                        </a>
-                    ))}
+                    <div className="hidden md:flex items-center space-x-10">
+                        {navList.map((nav, i) => (
+                            <a href={nav.href} key={i} className="navBar-text">
+                                // {nav.title}
+                            </a>
+                        ))}
+                    </div>
                 </div>
-
 
                 <button
                     onClick={() => setMenuOpen(!menuOpen)}
-                    className="md:hidden text-gray-400 dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-500 transition-all"
+                    className="md:hidden text-lightTxt hover:text-lightHoverTxt dark:text-darkTxt dark:hover:text-darkHoverTxt transition-all"
                 >
                     {menuOpen ? <X size={28} /> : <Menu size={28} />}
                 </button>
             </nav>
 
             {menuOpen && (
-                <div id="mobile-menu" className="md:hidden dark:bg-slate-900">
+                <div id="mobile-menu" className="md:hidden dark:bg-darkBg">
                     <div className="flex flex-col items-center py-4 space-y-4">
                         {navList.map((nav, i) => (
                             <a
@@ -61,7 +61,7 @@ const NavBar = () => {
                         ))}
                     </div>
 
-                    <div className="w-3/4 mx-auto h-[1.5px] bg-gray-400 dark:bg-gray-200"/>
+                    <div className="w-3/4 mx-auto h-[1.5px] bg-lightTxt dark:bg-darkTxt"/>
 
 
                 </div>

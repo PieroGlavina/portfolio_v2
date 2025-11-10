@@ -16,7 +16,7 @@ const App = () => {
         <main>
             <NavBar />
             <Hero />
-            <div className="h-[20vh]"/>
+            <div className="h-[20vh] dark:bg-slate-900"/>
             <Skills />
             <Projects />
             <Contact />

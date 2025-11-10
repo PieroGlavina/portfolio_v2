@@ -2,20 +2,34 @@
 
 @theme {
     --font-electrolize: "Electrolize", sans-serif;
+
+
+
+    --color-lightBg: oklch(98.5% 0.001 106.423);
+    --color-lightTxt: oklch(70.7% 0.022 261.325);
+    --color-lightHoverTxt: oklch(37.3% 0.034 259.733);
+
+
+    --color-darkBg: oklch(20.8% 0.042 265.755);
+    --color-darkTxt: oklch(87.2% 0.01 258.338);
+    --color-darkHoverTxt: oklch(55.1% 0.027 264.364);
+
+
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 
-
 *{
     scroll-behavior: smooth;
+    scrollbar-width: none;
+
 }
 
 @layer components{
 
     .navBar-text{
-        @apply font-electrolize text-2xl cursor-pointer text-gray-400 dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-500 transition-all;
+        @apply font-electrolize text-2xl cursor-pointer text-lightTxt hover:text-lightHoverTxt dark:text-darkTxt dark:hover:text-darkHoverTxt transition-all;
     }
 
     .section-title{

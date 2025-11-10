@@ -8,9 +8,9 @@ const ThemeSwitch = () => {
     return (
         <button
             onClick={toggleTheme}
-            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-2xl"
+            className="navBar-text border-3 border-gray-300 px-5 py-1 hover:border-gray-600"
         >
-            {theme === 'dark' ? '🌞' : '🌜'}
+            {theme === 'dark' ? 'dark' : 'light'}
         </button>
     );
 };
