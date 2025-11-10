@@ -26,10 +26,24 @@
 
 }
 
+@utility hero-radial-gradient {
+    background: radial-gradient(
+            at center,
+            oklch(0.281 0.067 265.816) 30%,
+            oklch(20.8% 0.042 265.755),
+            transparent 100%
+    );
+}
+
+
 @layer components{
 
     .navBar-text{
         @apply font-electrolize text-2xl cursor-pointer text-lightTxt hover:text-lightHoverTxt dark:text-darkTxt dark:hover:text-darkHoverTxt transition-all;
+    }
+
+    .text-gradient{
+        @apply bg-gradient-to-r from-yellow-500 from-15% to-orange-600 to-40% bg-clip-text text-transparent;
     }
 
     .section-title{

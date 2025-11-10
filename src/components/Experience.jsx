@@ -39,32 +39,27 @@ function FloatingCube({ mouse, attractionStrength, content, isMobile }) {
         const posObj = body.translation()
         cubePos.set(posObj.x, posObj.y, posObj.z)
 
-        // --- Linear Impulse ---
         impulse.set(0, 0, 0)
 
-        // 2. Modify this condition to *only* attract on non-mobile devices
         if (!isMobile && mouse.current.active) {
-            // 1. Calculate direction (as desired acceleration 'a')
+
             const toMouse = mouse.current.position.clone().sub(cubePos)
             toMouse.z = 0
             toMouse.normalize()
             impulse.copy(toMouse).multiplyScalar(attractionStrength)
         } else {
-            // Random float logic (will run on desktop when mouse is inactive, and *always* on mobile)
+
             if (Math.random() < 0.01) {
                 impulse.copy(randomVec()).multiplyScalar(0.3) // 1. Desired acceleration 'a'
             }
         }
 
-        // 2. Scale 'a' by time to get desired velocity change (Δv = a * Δt)
         impulse.multiplyScalar(delta)
 
-        // 3. Scale 'Δv' by mass to get required impulse (J = Δv * m)
         impulse.multiplyScalar(mass)
 
         body.applyImpulse(impulse, true)
 
-        // --- Angular Impulse (Torque) ---
         torqueImpulse.copy(randomVec()).multiplyScalar(0.003)
         torqueImpulse.multiplyScalar(mass)
         body.applyTorqueImpulse(torqueImpulse, true)
