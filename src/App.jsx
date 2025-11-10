@@ -16,6 +16,7 @@ const App = () => {
         <main>
             <NavBar />
             <Hero />
+            <div className="h-[20vh]"/>
             <Skills />
             <Projects />
             <Contact />

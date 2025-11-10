@@ -4,6 +4,10 @@
     --font-electrolize: "Electrolize", sans-serif;
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+
 *{
     scroll-behavior: smooth;
 }
@@ -11,7 +15,7 @@
 @layer components{
 
     .navBar-text{
-        @apply font-electrolize text-2xl cursor-pointer text-gray-400 hover:text-gray-700 transition-all;
+        @apply font-electrolize text-2xl cursor-pointer text-gray-400 dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-500 transition-all;
     }
 
     .section-title{
